@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #232526, #414345);
+            color: #fff;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            height: calc(100vh - 120px); /* Adjust height to fit the screen */
+        }
+
+        .main-content {
+            flex: 2;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #ffdd57;
+            border-radius: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb:hover {
+            background: #f1c40f;
+        }
+
+        .main-content::-webkit-scrollbar-button {
+            height: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-button:hover {
+            background: #ffdd57;
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .post {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .comments, .add-post-form {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .comments h2, .add-post-form h2 {
+            margin-top: 0;
+            color: #ffdd57;
+        }
+
+        .comments div, .comments form, .add-post-form form {
+            margin-top: 10px;
+        }
+
+        .comments input[type="text"], .comments textarea,
+        .add-post-form input[type="text"], .add-post-form textarea, .custom-file-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        .comments input[type="submit"], .add-post-form input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            background-color: #ffdd57;
+            color: #333;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .custom-file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            width: auto;
+        }
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px; /* Reduce padding */
+            font-size: 14px; /* Reduce font size */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-form input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+        }
+
+        .search-form input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li a {
+            font-family: "Arial", sans-serif;
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar ul li a:hover {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mi Blog</h1>
+    </header>
+
+    <nav>
+        <a href="#"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#blog-section"><i class="fas fa-newspaper"></i> Blog</a>
+        <a href="#"><i class="fas fa-user"></i> Acerca de</a>
+        <a href="#"><i class="fas fa-envelope"></i> Contacto</a>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="search-form">
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="Buscar en el blog...">
+                    <input type="submit" value="Buscar">
+                </form>
+            </div>
+            <div id="blog-section">
+                <!-- Los artículos agregados se insertarán aquí -->
+            </div>
+            <div class="comments">
+                <h2>Comentarios</h2>
+                <div id="comments-list"></div>
+                <form id="comment-form">
+                    <input type="text" id="name" placeholder="Tu nombre" required><br>
+                    <textarea id="comment" placeholder="Tu comentario" required></textarea><br>
+                    <input type="submit" value="Publicar comentario">
+                </form>
+            </div>
+            <!-- Formulario para agregar nuevo artículo -->
+            <div class="add-post-form">
+                <h2>Agregar Nuevo Artículo</h2>
+                <form id="add-post-form">
+                    <input type="text" id="post-title" placeholder="Título del artículo" required><br>
+                    <textarea id="post-content" placeholder="Contenido del artículo" required></textarea><br>
+                    <label class="custom-file-input">
+                        Seleccionar archivo
+                        <input type="file" id="post-image" accept="image/*">
+                    </label><br>
+                    <input type="submit" value="Agregar artículo">
+                </form>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h2>Entradas Recientes</h2>
+            <ul>
+                <li><a href="#"><i class="fas fa-angle-right"></i> Entrada 1</a></li>
+                <li><a href="#"><i class="fas fa-angle-right"></i> Entrada 2</a></li>
+                <!-- Puedes agregar más entradas recientes aquí -->
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Mi Blog</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        document.getElementById('comment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var name = document.getElementById('name').value;
+            var comment = document.getElementById('comment').value;
+            var commentElement = document.createElement('div');
+            commentElement.innerHTML = '<strong>' + name + '</strong>: ' + comment;
+            document.getElementById('comments-list').appendChild(commentElement);
+            document.getElementById('comment-form').reset();
+        });
+
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var searchTerm = document.getElementById('search-input').value;
+            // Implementa aquí la lógica de búsqueda
+            alert('Búsqueda: ' + searchTerm);
+        });
+
+        document.getElementById('add-post-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var title = document.getElementById('post-title').value;
+            var content = document.getElementById('post-content').value;
+            var imageInput = document.getElementById('post-image');
+            var postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = '<h2>' + title + '</h2><p>' + content + '</p>';
+            
+            if (imageInput.files && imageInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.style.maxWidth = '100%';
+                    imgElement.style.borderRadius = '10px';
+                    postElement.appendChild(imgElement);
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+            
+            document.getElementById('blog-section').appendChild(postElement);
+            document.getElementById('add-post-form').reset();
+        });
+    </script>
+
+</body>
+</html>
